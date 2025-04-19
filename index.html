@@ -1,16 +1,201 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ride With Me</title>
-    <script defer src="app.js"></script>
-    <style>
-        body { margin: 0; font-family: sans-serif; background: black; color: white; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIDEWITME - 자유로운 라이딩</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
-<body>
-    <div id="root"></div>
+<body class="bg-gray-900 font-sans text-gray-100">
+  <!-- 네비게이션 바 -->
+  <nav class="bg-black text-red-500 p-4 sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">RIDEWITME</h1>
+      <ul class="flex space-x-6">
+        <li><a href="#home" class="hover:underline">홈</a></li>
+        <li><a href="#rentals" class="hover:underline">렌트</a></li>
+        <li><a href="#booking" class="hover:underline">예약</a></li>
+        <li><a href="#contact" class="hover:underline">연락처</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 히어로 섹션 -->
+  <section id="home" class="bg-cover bg-center h-screen text-red-500 flex items-center" style="background-image: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop')">
+    <div class="container mx-auto text-center">
+      <h2 class="text-5xl font-bold mb-4">자유로운 라이딩의 시작</h2>
+      <p class="text-xl mb-6">RIDEWITME와 함께 도로를 누비세요!</p>
+      <a href="#booking" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded">지금 예약하기</a>
+    </div>
+  </section>
+
+  <!-- 렌트 정보 섹션 -->
+  <section id="rentals" class="py-16">
+    <div class="container mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-8 text-red-500">바이크 렌트 옵션</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <img src="https://images.unsplash.com/photo-1614631446689-1f05b07356f2?q=80&w=2070&auto=format&fit=crop" alt="티맥스 DX 스쿠터" class="w-full h-48 object-cover rounded mb-4">
+          <h4 class="text-xl font-bold text-red-500">티맥스 DX</h4>
+          <p class="text-gray-400">프리미엄 스쿠터로 편안한 주행</p>
+          <p class="text-red-500 font-bold mt-2">₩70,000/일</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <img src="https://images.unsplash.com/photo-1622023692-6a4fd83e84fc?q=80&w=2070&auto=format&fit=crop" alt="슈퍼커브 모터바이크" class="w-full h-48 object-cover rounded mb-4">
+          <h4 class="text-xl font-bold text-red-500">슈퍼커브</h4>
+          <p class="text-gray-400">가볍고 경제적인 시티 라이딩</p>
+          <p class="text-red-500 font-bold mt-2">₩30,000/일</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 예약 섹션 -->
+  <section id="booking" class="bg-gray-800 py-16">
+    <div class="container mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-8 text-red-500">바이크 예약</h3>
+      <div class="max-w-lg mx-auto bg-gray-900 p-8 rounded-lg shadow-lg">
+        <div>
+          <label class="block text-left mb-2 text-gray-100">이름</label>
+          <input type="text" id="name" class="w-full p-3 mb-4 border border-gray-700 bg-gray-800 text-gray-100 rounded" placeholder="이름을 입력하세요" required>
+        </div>
+        <div>
+          <label class="block text-left mb-2 text-gray-100">연락처</label>
+          <input type="tel" id="contact" class="w-full p-3 mb-4 border border-gray-700 bg-gray-800 text-gray-100 rounded" placeholder="연락처를 입력하세요" required>
+        </div>
+        <div>
+          <label class="block text-left mb-2 text-gray-100">대여 희망 기종</label>
+          <select id="bike" class="w-full p-3 mb-4 border border-gray-700 bg-gray-800 text-gray-100 rounded" required>
+            <option value="">선택하세요</option>
+            <option value="tmaxdx">티맥스 DX</option>
+            <option value="supercub">슈퍼커브</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-left mb-2 text-gray-100">시작일</label>
+          <input type="date" id="start_date" class="w-full p-3 mb-4 border border-gray-700 bg-gray-800 text-gray-100 rounded" required>
+        </div>
+        <div>
+          <label class="block text-left mb-2 text-gray-100">종료일</label>
+          <input type="date" id="end_date" class="w-full p-3 mb-4 border border-gray-700 bg-gray-800 text-gray-100 rounded" required>
+        </div>
+        <button onclick="sendBooking()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded w-full">예약하기</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연락처 섹션 -->
+  <section id="contact" class="py-16">
+    <div class="container mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-8 text-red-500">문의하기</h3>
+      <p class="text-lg mb-4">궁금한 점이 있으시면 언제든 연락주세요!</p>
+      <p class="text-lg mb-4">이메일: contact@ridewitme.co.kr</p>
+      <p class="text-lg mb-4">전화: 010-1234-5678</p>
+      <p class="text-lg">주소: 서울특별시 강남구 테헤란로 123</p>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="bg-black text-red-500 p-4">
+    <div class="container mx-auto text-center">
+      <p>© 2025 RIDEWITME. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 예약 완료 모달 -->
+  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-sm w-full text-center">
+      <h3 class="text-2xl font-bold text-red-500 mb-4">예약 요청 완료</h3>
+      <p class="text-gray-100 mb-6">예약 요청이 성공적으로 발송되었습니다!</p>
+      <button onclick="closeModal('bookingModal')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">확인</button>
+    </div>
+  </div>
+
+  <!-- 오류 모달 (기종 미선택) -->
+  <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-sm w-full text-center">
+      <h3 class="text-2xl font-bold text-red-500 mb-4">기종 선택 필요</h3>
+      <p class="text-gray-100 mb-6">기종을 선택하고 예약해 주세요!</p>
+      <button onclick="closeModal('errorModal')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">확인</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // 오늘 날짜 설정
+    const today = new Date().toISOString().split('T')[0];
+    const startDateInput = document.getElementById('start_date');
+    const endDateInput = document.getElementById('end_date');
+    startDateInput.value = today;
+    endDateInput.value = today;
+
+    // 시작일이 변경되면 종료일의 최소값을 업데이트
+    startDateInput.addEventListener('change', () => {
+      endDateInput.min = startDateInput.value;
+      if (endDateInput.value < startDateInput.value) {
+        endDateInput.value = startDateInput.value;
+      }
+    });
+
+    // 모달 열기/닫기 함수
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.remove('hidden');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+      if (modalId === 'bookingModal') {
+        // 폼 초기화
+        document.getElementById('name').value = '';
+        document.getElementById('contact').value = '';
+        document.getElementById('bike').value = '';
+        document.getElementById('start_date').value = today;
+        document.getElementById('end_date').value = today;
+      }
+    }
+
+    // EmailJS 초기화
+    emailjs.init('uo1I7tGVWTdD8Mr1v');
+
+    function sendBooking() {
+      const name = document.getElementById('name').value;
+      const contact = document.getElementById('contact').value;
+      const bike = document.getElementById('bike').value;
+      const start_date = document.getElementById('start_date').value;
+      const end_date = document.getElementById('end_date').value;
+
+      if (!name || !contact || !bike || !start_date || !end_date) {
+        if (!bike) {
+          openModal('errorModal');
+        } else {
+          alert('모든 필드를 입력해주세요!');
+        }
+        return;
+      }
+
+      if (end_date < start_date) {
+        alert('종료일은 시작일 이후여야 합니다!');
+        return;
+      }
+
+      const templateParams = {
+        name: name,
+        contact: contact,
+        model: bike === 'tmaxdx' ? '티맥스 DX' : '슈퍼커브',
+        start_date: start_date,
+        end_date: end_date,
+        to_email: 'contact@ridewitme.co.kr'
+      };
+
+      emailjs.send('service_ps121n4', 'template_cqo8l1k', templateParams)
+        .then(() => {
+          openModal('bookingModal');
+        }, (error) => {
+          alert('예약 전송에 실패했습니다. 다시 시도해주세요.');
+          console.error('EmailJS Error:', error);
+        });
+    }
+  </script>
 </body>
 </html>
